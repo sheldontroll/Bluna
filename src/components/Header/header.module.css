@@ -1,0 +1,43 @@
+.header {
+    background-color: var(--primary);
+    color: #ffffff;
+    padding: 1rem;
+    margin-bottom: var(--gap);
+}
+
+.header_wrapper {
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: center;
+    gap: calc(var(--gap) - 40px);
+
+}
+
+@media (min-width: 768px) {
+    .header_wrapper {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+    }
+}
+
+.logo_wrapper {
+    display: grid;
+    place-items: center;
+}
+
+.current_page_wrapper {
+    text-align: center;
+}
+
+.current_page {
+    margin: 0;
+    text-transform: capitalize;
+    font-size: 1.8rem;
+}
+
+@media (min-width: 768px) {
+    .current_page_wrapper {
+        text-align: left;
+    }
+}
