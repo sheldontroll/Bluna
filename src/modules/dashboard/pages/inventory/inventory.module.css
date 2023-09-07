@@ -1,0 +1,10 @@
+.menu_container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.back {
+    display: flex;
+    justify-content: flex-end;
+}
