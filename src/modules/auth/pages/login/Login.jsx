@@ -1,8 +1,11 @@
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import Input from "../../../../components/Input/Input"
 import Form from "../../components/Form/Form"
 
 import styles from './login.module.css'
+import { useState } from "react"
+import ErrorForm from "../../components/ErrorForm/ErrorForm"
+import { useAuth } from "../../hooks/useAuth"
 
 const InputEmailProps = {
     type: 'email',
@@ -26,17 +29,53 @@ const InputSubmitProps = {
 }
 
 function Login() {
+
+    const [login, setLogin] = useState({
+        email: '',
+        password: '',
+        hasErrors: false
+    })
+
+    const { handleAuthenticate } = useAuth();
+    const navigate = useNavigate();
+
+    const handleLogin = (event) => {
+        setLogin(prev => ({ ...prev, [event.target.id]: event.target.value }))
+    }
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+
+        if (Object.values(login).includes("")) {
+            setLogin(prev => ({ ...prev, hasErrors: true }))
+            return
+        }
+
+        setLogin(prev => ({ ...prev, hasErrors: false }))
+
+        handleAuthenticate({
+            username: 'user',
+            roles: ['admin']
+        })
+
+        navigate('/dashboard')
+    }
+
     return (
         <div className={styles.login}>
-            <Form title='Ingresa a la plataforma'>
+            <Form title='Ingresa a la plataforma' onSubmit={handleSubmit}>
                 <div className='field'>
-                    <Input {...InputEmailProps} />
+                    <Input {...InputEmailProps} onChange={handleLogin} value={login.email} />
                 </div>
                 <div className="field">
-                    <Input {...InputPasswordProps} />
+                    <Input {...InputPasswordProps} onChange={handleLogin} value={login.password} />
                 </div>
 
-                <Input {...InputSubmitProps} styling={{ backgroundColor: '#2E76FE', color: '#ffffff' }} />
+                <Input {...InputSubmitProps} style={{ backgroundColor: '#2E76FE', color: '#ffffff', cursor: 'pointer', fontWeight: 'bold' }} />
+
+                {
+                    login.hasErrors && <ErrorForm msg={"Rellene todos los campos"} />
+                }
 
                 <Link style={{
                     color: '#000000',

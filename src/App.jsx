@@ -5,8 +5,12 @@ import Register from "./modules/auth/pages/register/Register"
 import Home from "./modules/dashboard/pages/home/Home"
 import Inventory from "./modules/dashboard/pages/inventory/Inventory"
 import Layout from "./components/Layout/Layout";
+import PrivateRoutes from "./components/PrivateRoutes/PrivateRoutes"
+import Existencias from "./modules/dashboard/pages/Existencias/Existencias"
+
 
 function App() {
+
     return (
         <BrowserRouter>
             <Routes>
@@ -15,9 +19,14 @@ function App() {
                     <Route path="/login" element={<Login />} />
                     <Route path="/register" element={<Register />} />
 
-                    <Route path="/dashboard" element={<Outlet />}>
-                        <Route index element={<Home />} />
-                        <Route path="inventory" element={< Inventory />} />
+                    <Route element={<PrivateRoutes redirectTo={'/login'} />}>
+                        <Route path="/dashboard" element={<Outlet />}>
+                            <Route index element={<Home />} />
+                            <Route path="inventory" element={< Outlet />}>
+                                <Route index element={<Inventory />}></Route>
+                                <Route path="existencias" element={<Existencias />}></Route>
+                            </Route>
+                        </Route>
                     </Route>
                 </Route>
             </Routes>

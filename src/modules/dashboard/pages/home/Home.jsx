@@ -1,11 +1,11 @@
-import { Outlet } from 'react-router-dom'
-
-import React from 'react'
+import Menu from '../../components/Menu/Menu'
+import styles from './home.module.css'
+import { mainMenuItems } from '../../constants/constants'
 
 function Home() {
     return (
-        <div>Home
-            <Outlet></Outlet>
+        <div className={styles.menu_container}>
+            <Menu items={mainMenuItems} />
         </div>
     )
 }

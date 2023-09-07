@@ -5,6 +5,8 @@ import Form from '../../components/Form/Form';
 import Input from '../../../../components/Input/Input';
 import Select from '../../../../components/Select/Select';
 import { options } from '../../constants/constants';
+import { useState } from 'react';
+import ErrorForm from '../../components/ErrorForm/ErrorForm';
 
 const InputEmailProps = {
     type: 'email',
@@ -44,33 +46,64 @@ const InputSubmitProps = {
 }
 
 function Register() {
+    const [register, setRegister] = useState({
+        firstname: '',
+        lastname: '',
+        email: '',
+        password: '',
+        role: 'default',
+        hasErrors: false
+    })
+
+    const handleRegister = (event) => {
+        setRegister((prev) => ({ ...prev, [event.target.id]: event.target.value }))
+    }
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+
+        if (Object.values(register).includes("")) {
+            setRegister(prev => ({ ...prev, hasErrors: true }))
+            return
+        }
+
+        setRegister(prev => ({ ...prev, hasErrors: false }))
+    }
+
+
     return (
         <div className={styles.register}>
-            <Form title='Regístrate en la plataforma'>
+            <Form title='Regístrate en la plataforma' onSubmit={handleSubmit}>
                 <div className="field">
-                    <Input {...InputFirstNameProps} />
+                    <Input {...InputFirstNameProps} onChange={handleRegister} value={register.firstname} />
                 </div>
 
                 <div className="field">
-                    <Input {...InputLastNameProps} />
+                    <Input {...InputLastNameProps} onChange={handleRegister} value={register.lastname} />
                 </div>
 
                 <div className='field'>
-                    <Input {...InputEmailProps} />
+                    <Input {...InputEmailProps} onChange={handleRegister} value={register.email} />
                 </div>
+
                 <div className="field">
-                    <Input {...InputPasswordProps} />
+                    <Input {...InputPasswordProps} onChange={handleRegister} value={register.password} />
                 </div>
 
                 <div className='field'>
                     <Select
-                        value={'default'}
+                        id={'role'}
+                        value={register.role}
                         options={options}
+                        handler={handleRegister}
                     />
                 </div>
 
+                <Input {...InputSubmitProps} style={{ backgroundColor: '#2E76FE', color: '#ffffff', cursor: 'pointer', fontWeight: 'bold' }} />
 
-                <Input {...InputSubmitProps} styling={{ backgroundColor: '#2E76FE', color: '#ffffff' }} />
+                {
+                    register.hasErrors && <ErrorForm msg={"Rellena todos los campos"} />
+                }
 
                 <Link style={{
                     color: '#000000',
