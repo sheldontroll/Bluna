@@ -18,7 +18,7 @@ const InputEmailProps = {
 
 const InputPasswordProps = {
     type: 'password',
-    placeholder: 'strong password',
+    placeholder: 'Contraseña',
     name: 'password',
     id: 'password',
     label: 'Contraseña'
@@ -26,7 +26,7 @@ const InputPasswordProps = {
 
 const InputFirstNameProps = {
     type: 'text',
-    placeholder: 'John',
+    placeholder: 'Nombres',
     name: 'firstname',
     id: 'firstname',
     label: 'Nombre'
@@ -34,7 +34,7 @@ const InputFirstNameProps = {
 
 const InputLastNameProps = {
     type: 'text',
-    placeholder: 'Doe',
+    placeholder: 'Apellidos',
     name: 'lastname',
     id: 'lastname',
     label: 'Apellidos'
@@ -42,7 +42,7 @@ const InputLastNameProps = {
 
 const InputSubmitProps = {
     type: 'submit',
-    value: 'Register',
+    value: 'Registrar',
 }
 
 function Register() {

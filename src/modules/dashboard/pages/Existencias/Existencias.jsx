@@ -2,7 +2,9 @@ import Input from '../../../../components/Input/Input'
 import Anchor from '../../components/Anchor/Anchor'
 import Button from '../../components/Button/Button'
 import styles from './existencias.module.css'
-
+import Overlay from '../../../../components/Modal/Modal'
+import { useState } from 'react'
+import EForm from '../../components/ExistenciasForm/ExistenciasForm'
 
 const InputSearchProps = {
     type: 'text',
@@ -10,6 +12,8 @@ const InputSearchProps = {
 }
 
 function Existencias() {
+    const [isOverlayOpen, setIsOverlayOpen] = useState(false)
+
     return (
         <div className={styles.existencias}>
             <div className={styles.search}>
@@ -21,11 +25,20 @@ function Existencias() {
 
             <div className={`${styles.area}`}>
                 <span>de momento no hay existencias...</span>
+                
+
             </div>
+            <div>
+                <Overlay isOpen={isOverlayOpen} onClose={()=> setIsOverlayOpen(!isOverlayOpen)} >
+                        <EForm></EForm>
+                </Overlay>
+            </div>
+            
 
             <div className={styles.actions}>
-                <Button text={'Añadir'} />
+                <Button text={'Añadir'} onClick={()=> setIsOverlayOpen(!isOverlayOpen) } />
                 <Anchor navigateTo={'/dashboard/inventory'}>Volver al menú</Anchor>
+                
             </div>
         </div>
     )

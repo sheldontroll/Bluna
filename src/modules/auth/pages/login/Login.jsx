@@ -9,7 +9,7 @@ import { useAuth } from "../../hooks/useAuth"
 
 const InputEmailProps = {
     type: 'email',
-    placeholder: 'johndoe@johndoe.com',
+    placeholder: 'tucorreo@ejemplo.com',
     name: 'email',
     id: 'email',
     label: 'Correo electrónico'
@@ -17,7 +17,7 @@ const InputEmailProps = {
 
 const InputPasswordProps = {
     type: 'password',
-    placeholder: 'strong password',
+    placeholder: 'Contraseña',
     name: 'password',
     id: 'password',
     label: 'Contraseña'
@@ -25,7 +25,7 @@ const InputPasswordProps = {
 
 const InputSubmitProps = {
     type: 'submit',
-    value: 'Login',
+    value: 'Ingresar',
 }
 
 function Login() {

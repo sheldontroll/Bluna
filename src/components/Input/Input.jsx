@@ -6,7 +6,7 @@ function Input(InputProps) {
         <>
             {
                 InputProps.label &&
-                <label className={styles.label} htmlFor={InputProps.label}>{ }</label>
+                <label className={styles.label} htmlFor={InputProps.label}>{InputProps.label}</label>
             }
             <input {...InputProps} className={styles.input} />
         </>
