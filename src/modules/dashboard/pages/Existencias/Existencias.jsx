@@ -5,6 +5,8 @@ import styles from './existencias.module.css'
 import Overlay from '../../../../components/Modal/Modal'
 import { useState } from 'react'
 import EForm from '../../components/ExistenciasForm/ExistenciasForm'
+import { useFetch } from '../../../../useFetch'
+
 
 const InputSearchProps = {
     type: 'text',
@@ -12,7 +14,26 @@ const InputSearchProps = {
 }
 
 function Existencias() {
-    const [isOverlayOpen, setIsOverlayOpen] = useState(false)
+    const [isOverlayOpen, setIsOverlayOpen] = useState(false);
+    const {data, loading} = useFetch("http://localhost:3000/products")
+    const columns=[ 
+    {
+        nombre: 'Nombre',
+        selector: row => row.nombre
+    },
+    {
+        nombre: 'Anaquel',
+        selector: row => row.id_inventario
+    },
+    {
+        nombre: 'Descripción',
+        selector: row => row.descripción
+    },
+    {
+        nombre: 'Cantidad',
+        selector: row => row.cantidad
+    }
+    ]
 
     return (
         <div className={styles.existencias}>
@@ -20,12 +41,20 @@ function Existencias() {
                 <div className={styles.field_search}>
                     <Button text={'buscar'} />
                     <Input {...InputSearchProps} />
+                    
                 </div>
             </div>
 
             <div className={`${styles.area}`}>
                 <span>de momento no hay existencias...</span>
-                
+                <ul>
+                        
+                </ul>
+                            {data?.map((inventario) => (
+                            <li key={inventario.id_inventario}> {inventario.nombre} </li>
+                            
+                            )
+                            )}         
 
             </div>
             <div>
