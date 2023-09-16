@@ -15,7 +15,6 @@ const InputSearchProps = {
     type: 'text',
     placeholder: 'busca por codigo',
 }
-const apiData = fetchData("http://localhost:3000/products")
 const ImageEditarProps = {
     width: '10px',
     height: '10px',
@@ -24,30 +23,141 @@ const ImageEditarProps = {
 }
 function Existencias() {
     const [isOverlayOpen, setIsOverlayOpen] = useState(false);
-   // const {data, loading, error, handleCancelRequest} = useFetch("http://localhost:3000/products")
-   const data = apiData.read();
+    const apiData = [
+        {
+            "id_inventario": 1,
+            "nombre": "Cartulinas                                        ",
+            "id_almacen": 1,
+            "descripción": "color rojo                                        ",
+            "cantidad": 5
+        },
+        {
+            "id_inventario": 2,
+            "nombre": "tinte                                             ",
+            "id_almacen": 1,
+            "descripción": "negro                                             ",
+            "cantidad": 7
+        },
+        {
+            "id_inventario": 7,
+            "nombre": "tinte",
+            "id_almacen": 1,
+            "descripción": "negro                                             ",
+            "cantidad": 7
+        },
+        {
+            "id_inventario": 8,
+            "nombre": "carton",
+            "id_almacen": 6,
+            "descripción": "coarrugado                                        ",
+            "cantidad": 15
+        },
+        {
+            "id_inventario": 9,
+            "nombre": "carton",
+            "id_almacen": 6,
+            "descripción": "coarrugado                                        ",
+            "cantidad": 15
+        },
+        {
+            "id_inventario": 10,
+            "nombre": "cajas",
+            "id_almacen": 2,
+            "descripción": "cajas                                             ",
+            "cantidad": 15
+        },
+        {
+            "id_inventario": 11,
+            "nombre": "cajas",
+            "id_almacen": 2,
+            "descripción": "cajas                                             ",
+            "cantidad": 15
+        },
+        {
+            "id_inventario": 12,
+            "nombre": "cajas",
+            "id_almacen": 2,
+            "descripción": "cajas                                             ",
+            "cantidad": 15
+        },
+        {
+            "id_inventario": 13,
+            "nombre": "cajas",
+            "id_almacen": 2,
+            "descripción": "cajas                                             ",
+            "cantidad": 15
+        },
+        {
+            "id_inventario": 14,
+            "nombre": "cajas",
+            "id_almacen": 2,
+            "descripción": "cajas                                             ",
+            "cantidad": 15
+        },
+        {
+            "id_inventario": 15,
+            "nombre": "cajas",
+            "id_almacen": 2,
+            "descripción": "cajas                                             ",
+            "cantidad": 15
+        },
+        {
+            "id_inventario": 16,
+            "nombre": "cajas",
+            "id_almacen": 2,
+            "descripción": "cajas                                             ",
+            "cantidad": 15
+        },
+        {
+            "id_inventario": 17,
+            "nombre": "cajas",
+            "id_almacen": 2,
+            "descripción": "cajas                                             ",
+            "cantidad": 15
+        },
+        {
+            "id_inventario": 18,
+            "nombre": "cajas",
+            "id_almacen": 2,
+            "descripción": "cajas                                             ",
+            "cantidad": 15
+        },
+        {
+            "id_inventario": 19,
+            "nombre": "cajas",
+            "id_almacen": 2,
+            "descripción": "cajas                                             ",
+            "cantidad": 15
+        },
+        {
+            "id_inventario": 20,
+            "nombre": "cajas",
+            "id_almacen": 2,
+            "descripción": "cajas                                             ",
+            "cantidad": 15
+        }
+    ]
+    // const {data, loading, error, handleCancelRequest} = useFetch("http://localhost:3000/products")
+    const data = apiData;
 
-    const columns=[ 
-    {
-        name: 'Nombre',
-        selector: row => row.nombre
-    },
-    {
-        name: 'Anaquel',
-        selector: row => row.id_inventario
-    },
-    {
-        name: 'Descripción',
-        selector: row => row.descripción
-    },
-    {
-        name: 'Cantidad',
-        selector: row => row.cantidad
-    },
-    {
-        name: 'Acciones',
-        cell: (row, index, column, id) => <button> Acción </button>
-    }
+    const columns = [
+        {
+            name: 'Nombre',
+            selector: row => row.nombre
+        },
+        {
+            name: 'Anaquel',
+            selector: row => row.id_inventario
+        },
+        {
+            name: 'Descripción',
+            selector: row => row.descripción
+        },
+        {
+            name: 'Cantidad',
+            selector: row => row.cantidad
+        },
+
     ]
 
     return (
@@ -57,28 +167,25 @@ function Existencias() {
                 <div className={styles.field_search}>
                     <Button text={'buscar'} />
                     <Input {...InputSearchProps} />
-                    
                 </div>
             </div>
 
             <div className={`${styles.area}`}>
-            <Suspense fallback={<div>Cargando...</div>}>
-                
-                    <DataTable columns={columns} data={data} pagination paginationComponentOptions={{rowsPerPageText:'Filas por pagina', rangeSeparatorText: 'de'}} />
-                
-            </Suspense>
+                <Suspense fallback={<div>Cargando...</div>}>
+                    <DataTable columns={columns} data={data} pagination paginationComponentOptions={{ rowsPerPageText: 'Filas por pagina', rangeSeparatorText: 'de' }} />
+                </Suspense>
             </div>
             <div>
-                <Overlay isOpen={isOverlayOpen} onClose={()=> setIsOverlayOpen(!isOverlayOpen)} >
-                        <EForm></EForm>
+                <Overlay isOpen={isOverlayOpen} onClose={() => setIsOverlayOpen(!isOverlayOpen)} >
+                    <EForm></EForm>
                 </Overlay>
             </div>
-            
+
 
             <div className={styles.actions}>
-                <Button text={'Añadir'} onClick={()=> setIsOverlayOpen(!isOverlayOpen) } />
+                <Button text={'Añadir'} onClick={() => setIsOverlayOpen(!isOverlayOpen)} />
                 <Anchor navigateTo={'/dashboard/inventory'}>Volver al menú</Anchor>
-                
+
             </div>
         </div>
     )
