@@ -2,7 +2,8 @@ import Form from "../../../auth/components/Form/Form"
 import InputF from "../../../../components/Input/Input"
 import ButtonF from "../Button/Button"
 import Styles from "./ExistenciasForm.module.css"
-export default function ExistenciasForm(){
+
+export default function ExistenciasForm({ formProps }) {
     const InputCodigoProps = {
         id: 'codigo',
         name: 'codigo',
@@ -31,23 +32,23 @@ export default function ExistenciasForm(){
         type: 'number',
         label: 'Salidas'
     }
-    return(
-        <Form styling={{width:'100%'}}>
+    return (
+        <Form styling={{ width: '100%' }}>
             <div>
                 <div>
-                    <InputF {...InputCodigoProps}/>
+                    <InputF {...InputCodigoProps} />
                 </div>
 
                 <div>
-                    <InputF {...InputDescripcionProps}/>
+                    <InputF {...InputDescripcionProps} />
                 </div>
 
                 <div>
-                    <InputF {...InputIngresoProps}/>
+                    <InputF {...InputIngresoProps} />
                 </div>
 
                 <div>
-                    <InputF {...InputSalidaProps}/>
+                    <InputF {...InputSalidaProps} />
                 </div>
                 <div className={Styles.FormFooter}>
                     <ButtonF text='Añadir' />

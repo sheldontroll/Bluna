@@ -3,7 +3,7 @@ import Anchor from '../../components/Anchor/Anchor'
 import Button from '../../components/Button/Button'
 import styles from './existencias.module.css'
 import Overlay from '../../../../components/Modal/Modal'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import EForm from '../../components/ExistenciasForm/ExistenciasForm'
 import { useFetch } from '../../../../useFetch'
 import DataTable from 'react-data-table-component'
@@ -23,6 +23,25 @@ const ImageEditarProps = {
 }
 function Existencias() {
     const [isOverlayOpen, setIsOverlayOpen] = useState(false);
+    const [existencia, setExistencia] = useState(null);
+    const [existenciaData, setExistenciaData] = useState({})
+
+    //TODO: 
+    // 1) Conexion al backend
+    // 2) Crear api para existencia
+    // 3) Consultar a la api
+    // 4) Guardar la data de la existenci en el state de existenciaData
+    useEffect(() => {
+        //todo: COLOCAR URL DE LA API
+        // EXJEMPLO: `http://localhost:8000/api/existencia/${existencia}`
+        const response = fetchData();
+        const readed = response.read();
+        setExistenciaData({ ...readed });
+        setIsOverlayOpen(true);
+    }, [existencia])
+
+
+
     const apiData = [
         {
             "id_inventario": 1,
@@ -157,6 +176,17 @@ function Existencias() {
             name: 'Cantidad',
             selector: row => row.cantidad
         },
+        {
+            name: 'Actions',
+            cell: (row, index, column, id) => {
+                return (
+                    <div style={{ display: 'flex', gap: '1rem' }}>
+                        <button onClick={_ => setExistencia(row.id_inventario)}>Edit</button>
+                        <button onClick={_ => setExistencia(row.id_inventario)}>Delete</button>
+                    </div>
+                )
+            }
+        }
 
     ]
 
