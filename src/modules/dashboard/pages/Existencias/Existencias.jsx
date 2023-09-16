@@ -6,36 +6,52 @@ import Overlay from '../../../../components/Modal/Modal'
 import { useState } from 'react'
 import EForm from '../../components/ExistenciasForm/ExistenciasForm'
 import { useFetch } from '../../../../useFetch'
-
-
+import DataTable from 'react-data-table-component'
+import 'styled-components'
+import { fetchData } from '../../../../fetchData'
+import { Suspense } from "react"
+import editar from '../../../../assets/editar.png'
 const InputSearchProps = {
     type: 'text',
     placeholder: 'busca por codigo',
 }
-
+const apiData = fetchData("http://localhost:3000/products")
+const ImageEditarProps = {
+    width: '10px',
+    height: '10px',
+    alt: 'editar',
+    src: editar
+}
 function Existencias() {
     const [isOverlayOpen, setIsOverlayOpen] = useState(false);
-    const {data, loading} = useFetch("http://localhost:3000/products")
+   // const {data, loading, error, handleCancelRequest} = useFetch("http://localhost:3000/products")
+   const data = apiData.read();
+
     const columns=[ 
     {
-        nombre: 'Nombre',
+        name: 'Nombre',
         selector: row => row.nombre
     },
     {
-        nombre: 'Anaquel',
+        name: 'Anaquel',
         selector: row => row.id_inventario
     },
     {
-        nombre: 'Descripción',
+        name: 'Descripción',
         selector: row => row.descripción
     },
     {
-        nombre: 'Cantidad',
+        name: 'Cantidad',
         selector: row => row.cantidad
+    },
+    {
+        name: 'Acciones',
+        cell: (row, index, column, id) => <button> Acción </button>
     }
     ]
 
     return (
+
         <div className={styles.existencias}>
             <div className={styles.search}>
                 <div className={styles.field_search}>
@@ -46,16 +62,11 @@ function Existencias() {
             </div>
 
             <div className={`${styles.area}`}>
-                <span>de momento no hay existencias...</span>
-                <ul>
-                        
-                </ul>
-                            {data?.map((inventario) => (
-                            <li key={inventario.id_inventario}> {inventario.nombre} </li>
-                            
-                            )
-                            )}         
-
+            <Suspense fallback={<div>Cargando...</div>}>
+                
+                    <DataTable columns={columns} data={data} pagination paginationComponentOptions={{rowsPerPageText:'Filas por pagina', rangeSeparatorText: 'de'}} />
+                
+            </Suspense>
             </div>
             <div>
                 <Overlay isOpen={isOverlayOpen} onClose={()=> setIsOverlayOpen(!isOverlayOpen)} >
