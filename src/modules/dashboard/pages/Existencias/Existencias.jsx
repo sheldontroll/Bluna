@@ -21,144 +21,24 @@ const ImageEditarProps = {
     alt: 'editar',
     src: editar
 }
+const response = fetchData("http://localhost:3000/products");
 function Existencias() {
     const [isOverlayOpen, setIsOverlayOpen] = useState(false);
     const [existencia, setExistencia] = useState(null);
-    const [existenciaData, setExistenciaData] = useState({})
+    const [action, setAction] = useState('añadir');
+    const readed = response.read();
 
-    //TODO: 
-    // 1) Conexion al backend
-    // 2) Crear api para existencia
-    // 3) Consultar a la api
-    // 4) Guardar la data de la existenci en el state de existenciaData
-    useEffect(() => {
-        //todo: COLOCAR URL DE LA API
-        // EXJEMPLO: `http://localhost:8000/api/existencia/${existencia}`
-        const response = fetchData();
-        const readed = response.read();
-        setExistenciaData({ ...readed });
-        setIsOverlayOpen(true);
-    }, [existencia])
-
-
-
-    const apiData = [
-        {
-            "id_inventario": 1,
-            "nombre": "Cartulinas                                        ",
-            "id_almacen": 1,
-            "descripción": "color rojo                                        ",
-            "cantidad": 5
-        },
-        {
-            "id_inventario": 2,
-            "nombre": "tinte                                             ",
-            "id_almacen": 1,
-            "descripción": "negro                                             ",
-            "cantidad": 7
-        },
-        {
-            "id_inventario": 7,
-            "nombre": "tinte",
-            "id_almacen": 1,
-            "descripción": "negro                                             ",
-            "cantidad": 7
-        },
-        {
-            "id_inventario": 8,
-            "nombre": "carton",
-            "id_almacen": 6,
-            "descripción": "coarrugado                                        ",
-            "cantidad": 15
-        },
-        {
-            "id_inventario": 9,
-            "nombre": "carton",
-            "id_almacen": 6,
-            "descripción": "coarrugado                                        ",
-            "cantidad": 15
-        },
-        {
-            "id_inventario": 10,
-            "nombre": "cajas",
-            "id_almacen": 2,
-            "descripción": "cajas                                             ",
-            "cantidad": 15
-        },
-        {
-            "id_inventario": 11,
-            "nombre": "cajas",
-            "id_almacen": 2,
-            "descripción": "cajas                                             ",
-            "cantidad": 15
-        },
-        {
-            "id_inventario": 12,
-            "nombre": "cajas",
-            "id_almacen": 2,
-            "descripción": "cajas                                             ",
-            "cantidad": 15
-        },
-        {
-            "id_inventario": 13,
-            "nombre": "cajas",
-            "id_almacen": 2,
-            "descripción": "cajas                                             ",
-            "cantidad": 15
-        },
-        {
-            "id_inventario": 14,
-            "nombre": "cajas",
-            "id_almacen": 2,
-            "descripción": "cajas                                             ",
-            "cantidad": 15
-        },
-        {
-            "id_inventario": 15,
-            "nombre": "cajas",
-            "id_almacen": 2,
-            "descripción": "cajas                                             ",
-            "cantidad": 15
-        },
-        {
-            "id_inventario": 16,
-            "nombre": "cajas",
-            "id_almacen": 2,
-            "descripción": "cajas                                             ",
-            "cantidad": 15
-        },
-        {
-            "id_inventario": 17,
-            "nombre": "cajas",
-            "id_almacen": 2,
-            "descripción": "cajas                                             ",
-            "cantidad": 15
-        },
-        {
-            "id_inventario": 18,
-            "nombre": "cajas",
-            "id_almacen": 2,
-            "descripción": "cajas                                             ",
-            "cantidad": 15
-        },
-        {
-            "id_inventario": 19,
-            "nombre": "cajas",
-            "id_almacen": 2,
-            "descripción": "cajas                                             ",
-            "cantidad": 15
-        },
-        {
-            "id_inventario": 20,
-            "nombre": "cajas",
-            "id_almacen": 2,
-            "descripción": "cajas                                             ",
-            "cantidad": 15
-        }
-    ]
     // const {data, loading, error, handleCancelRequest} = useFetch("http://localhost:3000/products")
-    const data = apiData;
+    const handleEditExistencia = (id) => {
+        setIsOverlayOpen(true);
+        setAction('editar');
+        setExistencia(id);
+    }
 
+    const handleModal = () =>{
+        setIsOverlayOpen(!isOverlayOpen);
+        setAction('añadir');
+    }
     const columns = [
         {
             name: 'Nombre',
@@ -181,7 +61,8 @@ function Existencias() {
             cell: (row, index, column, id) => {
                 return (
                     <div style={{ display: 'flex', gap: '1rem' }}>
-                        <button onClick={_ => setExistencia(row.id_inventario)}>Edit</button>
+                        <button onClick={_ => handleEditExistencia(row.id_inventario)}>Edit</button>
+                       
                         <button onClick={_ => setExistencia(row.id_inventario)}>Delete</button>
                     </div>
                 )
@@ -202,18 +83,18 @@ function Existencias() {
 
             <div className={`${styles.area}`}>
                 <Suspense fallback={<div>Cargando...</div>}>
-                    <DataTable columns={columns} data={data} pagination paginationComponentOptions={{ rowsPerPageText: 'Filas por pagina', rangeSeparatorText: 'de' }} />
+                    <DataTable columns={columns} data={ readed } pagination paginationComponentOptions={{ rowsPerPageText: 'Filas por pagina', rangeSeparatorText: 'de' }} />
                 </Suspense>
             </div>
             <div>
                 <Overlay isOpen={isOverlayOpen} onClose={() => setIsOverlayOpen(!isOverlayOpen)} >
-                    <EForm></EForm>
+                    <EForm id={existencia} action={action} ></EForm>
                 </Overlay>
             </div>
 
 
             <div className={styles.actions}>
-                <Button text={'Añadir'} onClick={() => setIsOverlayOpen(!isOverlayOpen)} />
+                <Button text={'Añadir'} onClick={() => handleModal() } />
                 <Anchor navigateTo={'/dashboard/inventory'}>Volver al menú</Anchor>
 
             </div>
