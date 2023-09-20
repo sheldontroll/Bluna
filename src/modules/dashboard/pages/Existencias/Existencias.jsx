@@ -20,6 +20,7 @@ const ImageEditarProps = {
     alt: 'editar',
     src: editar
 }
+const response = fetchData("http://localhost:3000/products");
 function Existencias() {
     const [isOverlayOpen, setIsOverlayOpen] = useState(false);
     const [existencia, setExistencia] = useState(null);
@@ -155,6 +156,7 @@ function Existencias() {
             "cantidad": 15
         }
     ]
+    // const {data, loading, error, handleCancelRequest} = useFetch("http://localhost:3000/products")
     const data = apiData;
 
     const columns = [
@@ -179,7 +181,8 @@ function Existencias() {
             cell: (row, index, column, id) => {
                 return (
                     <div style={{ display: 'flex', gap: '1rem' }}>
-                        <button onClick={_ => setExistencia(row.id_inventario)}>Edit</button>
+                        <button onClick={_ => handleEditExistencia(row.id_inventario)}>Edit</button>
+                        <button className={styles.boton - editar}></button>
                         <button onClick={_ => setExistencia(row.id_inventario)}>Delete</button>
                     </div>
                 )
@@ -200,18 +203,18 @@ function Existencias() {
 
             <div className={`${styles.area}`}>
                 <Suspense fallback={<div>Cargando...</div>}>
-                    <DataTable columns={columns} data={data} pagination paginationComponentOptions={{ rowsPerPageText: 'Filas por pagina', rangeSeparatorText: 'de' }} />
+                    <DataTable columns={columns} data={readed} pagination paginationComponentOptions={{ rowsPerPageText: 'Filas por pagina', rangeSeparatorText: 'de' }} />
                 </Suspense>
             </div>
             <div>
                 <Overlay isOpen={isOverlayOpen} onClose={() => setIsOverlayOpen(!isOverlayOpen)} >
-                    <EForm></EForm>
+                    <EForm id={existencia} action={action} ></EForm>
                 </Overlay>
             </div>
 
 
             <div className={styles.actions}>
-                <Button text={'Añadir'} onClick={() => setIsOverlayOpen(!isOverlayOpen)} />
+                <Button text={'Añadir'} onClick={() => handleModal()} />
                 <Anchor navigateTo={'/dashboard/inventory'}>Volver al menú</Anchor>
 
             </div>

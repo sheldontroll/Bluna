@@ -9,7 +9,7 @@ export const mainMenuItems = [
     },
     {
         name: 'Establecer Roles',
-        route: '/dashboard'
+        route: 'roles'
     }
 ]
 

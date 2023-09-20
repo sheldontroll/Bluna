@@ -7,6 +7,7 @@ import Inventory from "./modules/dashboard/pages/inventory/Inventory"
 import Layout from "./components/Layout/Layout";
 import PrivateRoutes from "./components/PrivateRoutes/PrivateRoutes"
 import Existencias from "./modules/dashboard/pages/Existencias/Existencias"
+import EstablecerRoles from "./modules/dashboard/pages/EstablecerRoles/EstablecerRoles"
 
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
 
                     <Route element={<PrivateRoutes redirectTo={'/login'} />}>
                         <Route path="/dashboard" element={<Outlet />}>
+                            <Route path="roles" element={<EstablecerRoles/>}/>
                             <Route index element={<Home />} />
                             <Route path="inventory" element={< Outlet />}>
                                 <Route index element={<Inventory />}></Route>
