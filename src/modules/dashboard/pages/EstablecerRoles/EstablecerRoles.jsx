@@ -8,7 +8,7 @@ import { useState, useEffect } from "react";
 import Input from "../../../../components/Input/Input";
 import DataTable from "react-data-table-component";
 import 'styled-components'
-
+import EForm from "../../components/RolesForm/RolesForm";
 
 
 const InputSearchProps = {
@@ -26,10 +26,10 @@ function EstablecerRoles() {
     const [action, setAction] = useState('añadir');
     const readed = response.read();
 
-    const handleEditExistencia = (id) => {
+    const handleEditRol = (ruc) => {
         setIsOverlayOpen(true);
         setAction('editar');
-        setExistencia(id);
+        setExistencia(ruc);
     }
 
     const handleModal = () =>{
@@ -50,11 +50,11 @@ function EstablecerRoles() {
             selector: row => row.rol
         },
         {
-            name: 'Actions',
+            name: 'Acciones',
             cell: (row, index, column, id) => {
                 return (
                     <div style={{ display: 'flex', gap: '1rem' }}>
-                        <button  onClick={_ => handleEditExistencia(row.ruc)}>Editar</button>
+                        <button  onClick={_ => handleEditRol(row.ruc.trim())}>Editar</button>
                         <button onClick={_ => setExistencia(row.ruc)}>Borrar</button>
                     </div>
                 )
@@ -79,6 +79,11 @@ return (
             </Suspense>
         </div>
 
+        <div>
+                <Overlay isOpen={isOverlayOpen} onClose={() => setIsOverlayOpen(!isOverlayOpen)} >
+                    <EForm ruc={existencia} action={action} ></EForm>
+                </Overlay>
+        </div>
 
         <div className={styles.actions}>
             <Anchor navigateTo={'/dashboard'}>Volver al menú</Anchor>
