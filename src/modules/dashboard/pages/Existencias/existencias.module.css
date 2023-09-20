@@ -29,4 +29,12 @@
     gap: 1rem;
     justify-content: flex-end;
 }
-
+.boton-editar {
+    width: 10px; /* Establece el ancho deseado */
+    height: 10px; /* Establece la altura deseada */
+    background-image: url('../../../../assets/editar.png'); /* Ruta de tu imagen */
+    background-size: cover; /* Ajusta la imagen para cubrir todo el botón */
+    background-repeat: no-repeat; /* Evita la repetición de la imagen */
+    border: none; /* Elimina el borde del botón */
+    cursor: pointer;
+}

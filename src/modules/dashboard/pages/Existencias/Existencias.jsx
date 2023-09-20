@@ -61,8 +61,8 @@ function Existencias() {
             cell: (row, index, column, id) => {
                 return (
                     <div style={{ display: 'flex', gap: '1rem' }}>
-                        <button onClick={_ => handleEditExistencia(row.id_inventario)}>Edit</button>
-                       
+                        <button  onClick={_ => handleEditExistencia(row.id_inventario)}>Edit</button>
+                        <button className={ styles.boton-editar }></button>
                         <button onClick={_ => setExistencia(row.id_inventario)}>Delete</button>
                     </div>
                 )

@@ -34,6 +34,13 @@ const InputSalidaProps = {
     type: 'number',
     label: 'Salidas'
 }
+const InputCantidadProps = {
+    id: 'cantidad',
+    name: 'cantidad',
+    placeholder: 'Cantidad Total',
+    type: 'number',
+    label: 'Cantidad'
+}
 
 export default function ExistenciasForm( {id, action} ) {
     const [producto, setProducto] = useState( {id_inventario:null,id_almacen:null,descripcion:null,cantidad:null} )
@@ -71,6 +78,10 @@ export default function ExistenciasForm( {id, action} ) {
 
                 <div>
                     <InputF {...InputSalidaProps} />
+                </div>
+
+                <div>
+                    <InputF value={producto.cantidad}  {...InputCantidadProps} />
                 </div>
                 <div className={Styles.FormFooter}>
                     <ButtonF text='Añadir' />
