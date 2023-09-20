@@ -5,7 +5,6 @@ import styles from './existencias.module.css'
 import Overlay from '../../../../components/Modal/Modal'
 import { useEffect, useState } from 'react'
 import EForm from '../../components/ExistenciasForm/ExistenciasForm'
-import { useFetch } from '../../../../useFetch'
 import DataTable from 'react-data-table-component'
 import 'styled-components'
 import { fetchData } from '../../../../fetchData'
@@ -156,7 +155,6 @@ function Existencias() {
             "cantidad": 15
         }
     ]
-    // const {data, loading, error, handleCancelRequest} = useFetch("http://localhost:3000/products")
     const data = apiData;
 
     const columns = [

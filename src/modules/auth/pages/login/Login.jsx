@@ -43,7 +43,7 @@ function Login() {
         setLogin(prev => ({ ...prev, [event.target.id]: event.target.value }))
     }
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
 
         if (Object.values(login).includes("")) {
@@ -54,11 +54,30 @@ function Login() {
         setLogin(prev => ({ ...prev, hasErrors: false }))
 
         handleAuthenticate({
-            username: 'user',
-            roles: ['admin']
+            email: login.email,
+            password: login.password
         })
 
+        const request = await fetch('http://localhost:3000/auth/login', {
+            headers: {
+                'Content-type': 'application/json',
+            },
+            method: 'POST',
+            body: JSON.stringify({
+                email: login.email,
+                password: login.password
+            })
+        })
+
+        const response = await request.json()
+
+        if (!response.ok) {
+            return
+        }
+
+        localStorage.setItem('token', response.info.token);
         navigate('/dashboard')
+
     }
 
     return (

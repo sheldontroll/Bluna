@@ -7,6 +7,8 @@ import Select from '../../../../components/Select/Select';
 import { options } from '../../constants/constants';
 import { useState } from 'react';
 import ErrorForm from '../../components/ErrorForm/ErrorForm';
+import { useNavigate } from 'react-router-dom';
+
 
 const InputEmailProps = {
     type: 'email',
@@ -40,6 +42,14 @@ const InputLastNameProps = {
     label: 'Apellidos'
 }
 
+const InputTelfProps = {
+    type: 'number',
+    placeholder: 'telf',
+    name: 'telf',
+    id: 'telf',
+    label: 'Telfono:'
+}
+
 const InputSubmitProps = {
     type: 'submit',
     value: 'Registrar',
@@ -51,15 +61,17 @@ function Register() {
         lastname: '',
         email: '',
         password: '',
-        role: 'default',
+        telf: '',
         hasErrors: false
     })
+
+    const navigate = useNavigate()
 
     const handleRegister = (event) => {
         setRegister((prev) => ({ ...prev, [event.target.id]: event.target.value }))
     }
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
 
         if (Object.values(register).includes("")) {
@@ -68,6 +80,32 @@ function Register() {
         }
 
         setRegister(prev => ({ ...prev, hasErrors: false }))
+
+        const newUser = {
+            name: `${register.firstname} ${register.lastname}`,
+            email: register.email,
+            telf: register.telf,
+            password: register.password
+        };
+
+        const request = await fetch('http://localhost:3000/auth/register', {
+            headers: {
+                'Content-type': 'application/json',
+            },
+            method: 'POST',
+            body: JSON.stringify({
+                ...newUser
+            })
+        })
+
+        const response = await request.json()
+
+        if (!response.ok) {
+            return
+        }
+
+        localStorage.setItem('token', response.user.token);
+        navigate('/dashboard')
     }
 
 
@@ -88,6 +126,9 @@ function Register() {
 
                 <div className="field">
                     <Input {...InputPasswordProps} onChange={handleRegister} value={register.password} />
+                </div>
+                <div className="field">
+                    <Input {...InputTelfProps} onChange={handleRegister} value={register.telf} />
                 </div>
 
                 <div className='field'>

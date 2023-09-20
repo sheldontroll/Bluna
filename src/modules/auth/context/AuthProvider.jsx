@@ -1,8 +1,6 @@
 import { createContext, useState } from "react";
 
-
 export const AuthContext = createContext()
-
 
 export default function AuthProvider({ children }) {
 
@@ -12,6 +10,7 @@ export default function AuthProvider({ children }) {
     const handleAuthenticate = (user) => {
         setAuth(user);
     }
+
 
     return (
         <AuthContext.Provider value={{ auth, handleAuthenticate }}>
