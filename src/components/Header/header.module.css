@@ -41,3 +41,10 @@
         text-align: left;
     }
 }
+
+
+.logout {
+    text-decoration: underline;
+    font-weight: bold;
+    cursor: pointer;
+}

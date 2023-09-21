@@ -11,9 +11,14 @@ export default function AuthProvider({ children }) {
         setAuth(user);
     }
 
+    const handleLogout = () => {
+        localStorage.removeItem('token');
+        location.reload()
+    }
+
 
     return (
-        <AuthContext.Provider value={{ auth, handleAuthenticate }}>
+        <AuthContext.Provider value={{ auth, handleAuthenticate, handleLogout }}>
             {children}
         </AuthContext.Provider>
     )

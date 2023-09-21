@@ -2,6 +2,7 @@ import styles from './header.module.css'
 import Image from '../Image/Image'
 import Logo from '../../assets/logo.png'
 import { useLocation } from 'react-router-dom'
+import { useAuth } from '../../modules/auth/hooks/useAuth'
 
 const ImageProps = {
     width: '100px',
@@ -21,6 +22,10 @@ function Header() {
         return currentPath ?? "login"
     }
 
+    const { handleLogout } = useAuth()
+
+
+
     return (
         <header className={styles.header}>
             <div className={`${styles.header_wrapper} container`}>
@@ -30,6 +35,12 @@ function Header() {
                             formatPathName(location.pathname)
                         }
                     </h1>
+
+                    {
+                        localStorage.getItem('token') &&
+                        <a className={styles.logout} onClick={() => handleLogout()}>Logout</a>
+
+                    }
                 </div>
 
                 <div className={styles.logo_wrapper}>
