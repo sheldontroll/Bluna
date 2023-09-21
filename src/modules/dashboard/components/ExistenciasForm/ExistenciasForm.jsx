@@ -50,7 +50,7 @@ const InputCantidadProps = {
 }
 
 export default function ExistenciasForm({ id, action }) {
-    const [producto, setProducto] = useState({ id_almacen: "", descripcion: "", cantidad: "" })
+    const [producto, setProducto] = useState({ id_almacen: "", descripción: "", cantidad: "", ingresos: 0, salidas: 0 })
 
     useEffect(() => {
         const fetchProduct = async () => {
@@ -63,7 +63,7 @@ export default function ExistenciasForm({ id, action }) {
         if (id && action === 'editar') {
             fetchProduct()
         } else {
-            setProducto({ id_almacen: "", descripcion: "", cantidad: "" });
+            setProducto({ id_almacen: "", descripción: "", cantidad: "" });
         }
     }, [id])
 
@@ -84,11 +84,13 @@ export default function ExistenciasForm({ id, action }) {
         setProducto(prev => ({ ...prev, hasErrors: false }))
 
         const newProducto = {
-            descripcion: producto.descripcion,
+            descripcion: producto.descripción,
             id_almacen: producto.id_almacen,
             cantidad: producto.cantidad,
         };
 
+        
+        
 
         if (action === 'añadir') {
             const request = await fetch('http://localhost:3000/products', {
@@ -106,6 +108,27 @@ export default function ExistenciasForm({ id, action }) {
             // bad request - revisa que la data que le estes enviando sea la misma que el backend esta esperando.
             // error 500 - revisa que la data que le estes enviando al backend le este llegando correctamente
             // method not supported - ESTO SIGNIFICA QUE EL METODO DEL FETCH NO ES COMPATIBLE CON EL METODO HTTP QUE ESTA ESPERANDO TU ENDPOINT
+            
+            const sumarRequest = await fetch(`http://localhost:3000/products/${id}/sumar/${producto.ingresos}`, {
+            headers: {
+                'Content-type': 'application/json',
+             },
+                method: 'PUT',
+                body: JSON.stringify({
+                id_inventario: id,
+                cantidad: producto.ingresos,
+             }),
+            });
+            const restarRequest = await fetch(`http://localhost:3000/products/${id}/restar/${producto.salidas}`, {
+            headers: {
+            'Content-type': 'application/json',
+            },
+                    method: 'PUT',
+                    body: JSON.stringify({
+                    id_inventario: id,
+                    cantidad: producto.salidas,
+                }),
+            });
         }
 
         location.reload();
@@ -122,7 +145,7 @@ export default function ExistenciasForm({ id, action }) {
                 }
 
                 <div>
-                    <InputF value={producto.descripcion} {...InputDescripcionProps} onChange={handleAñadir} />
+                    <InputF value={producto.descripción} {...InputDescripcionProps} onChange={handleAñadir} />
                 </div>
 
                 <div>
@@ -130,11 +153,11 @@ export default function ExistenciasForm({ id, action }) {
                 </div>
 
                 <div>
-                    <InputF {...InputIngresoProps} />
+                    <InputF  value={producto.ingresos} {...InputIngresoProps} onChange={handleAñadir} />
                 </div>
 
                 <div>
-                    <InputF {...InputSalidaProps} />
+                    <InputF value={producto.salidas} {...InputSalidaProps} onChange={handleAñadir} />
                 </div>
 
                 <div>
