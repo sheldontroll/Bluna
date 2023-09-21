@@ -54,6 +54,7 @@ function Existencias() {
     // }, [existencia])
 
     // const {data, loading, error, handleCancelRequest} = useFetch("http://localhost:3000/products"
+    
 
     const columns = [
         {
