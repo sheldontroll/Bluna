@@ -1,14 +1,14 @@
 export const options = [
     {
         name: 'Administrador',
-        value: 'admin',
+        value: 'ADMIN',
     },
     {
         name: 'Colaborador',
-        value: 'collab',
+        value: 'COLLABORATOR',
     },
     {
         name: 'Selecciona un rol',
-        value: 'default'
+        value: 'NOT ASSIGNED'
     }
 ]

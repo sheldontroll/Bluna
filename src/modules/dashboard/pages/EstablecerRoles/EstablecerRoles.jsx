@@ -18,9 +18,9 @@ const InputSearchProps = {
 
 
 
-const response = fetchData("http://localhost:3000/auth/usuarios");
 
 function EstablecerRoles() {
+    const response = fetchData("http://localhost:8000/auth/users/get-all");
     const [isOverlayOpen, setIsOverlayOpen] = useState(false);
     const [existencia, setExistencia] = useState(null);
     const [action, setAction] = useState('añadir');

@@ -58,7 +58,7 @@ function Login() {
             password: login.password
         })
 
-        const request = await fetch('http://localhost:3000/auth/login', {
+        const request = await fetch('http://localhost:8000/auth/login', {
             headers: {
                 'Content-type': 'application/json',
             },
@@ -75,7 +75,9 @@ function Login() {
             return
         }
 
-        localStorage.setItem('token', response.info.token);
+        localStorage.setItem('token', response.token);
+        localStorage.setItem('userinfo', response.user);
+
         navigate('/dashboard')
 
     }

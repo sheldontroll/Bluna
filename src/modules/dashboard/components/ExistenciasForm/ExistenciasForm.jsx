@@ -21,8 +21,8 @@ const InputAnaquelProps = {
     label: 'anaquel'
 }
 const InputDescripcionProps = {
-    id: 'descripcion',
-    name: 'descripcion',
+    id: 'descripción',
+    name: 'descripción',
     placeholder: 'ingresa la descripcion',
     type: 'text',
     label: 'Descripción'
@@ -50,7 +50,7 @@ const InputCantidadProps = {
 }
 
 export default function ExistenciasForm({ id, action }) {
-    const [producto, setProducto] = useState({ id_almacen: "", descripción: "", cantidad: "", ingresos: 0, salidas: 0 })
+    const [producto, setProducto] = useState({ id_inventario: "",id_almacen: "", descripción: "", cantidad: "", ingresos: 0, salidas: 0 })
 
     useEffect(() => {
         const fetchProduct = async () => {
@@ -58,7 +58,7 @@ export default function ExistenciasForm({ id, action }) {
             const recibir = await fetch(url)
             const response = await recibir.json()
 
-            setProducto(prev => ({ ...prev, id_almacen: response.id_almacen, descripción: response.descripción, cantidad: response.cantidad }));
+            setProducto(prev => ({ ...prev, id_inventario: response.id_inventario,id_almacen: response.id_almacen, descripción: response.descripción, cantidad: response.cantidad }));
         }
 
         if (id && action === 'editar') {
@@ -85,7 +85,7 @@ export default function ExistenciasForm({ id, action }) {
         setProducto(prev => ({ ...prev, hasErrors: false }))
 
         const newProducto = {
-            descripcion: producto.descripción,
+            descripción: producto.descripción,
             id_almacen: producto.id_almacen,
             cantidad: producto.cantidad,
         };
@@ -138,7 +138,7 @@ export default function ExistenciasForm({ id, action }) {
                 {
                     action === 'editar' && (
                         <div>
-                            <InputF {...InputCodigoProps} />
+                            <InputF value={producto.id_inventario} {...InputCodigoProps} />
                         </div>
                     )
                 }

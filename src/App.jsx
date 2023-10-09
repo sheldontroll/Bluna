@@ -8,6 +8,7 @@ import Layout from "./components/Layout/Layout";
 import PrivateRoutes from "./components/PrivateRoutes/PrivateRoutes"
 import Existencias from "./modules/dashboard/pages/Existencias/Existencias"
 import EstablecerRoles from "./modules/dashboard/pages/EstablecerRoles/EstablecerRoles"
+import Solicitar from "./modules/dashboard/pages/SolicitarExistencias/SolicitarExistencias"
 
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
                             <Route path="inventory" element={< Outlet />}>
                                 <Route index element={<Inventory />}></Route>
                                 <Route path="existencias" element={<Existencias />}></Route>
+                                <Route path="solicitudes" element={<Solicitar />}></Route>
                             </Route>
                         </Route>
                     </Route>

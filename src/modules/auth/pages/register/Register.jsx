@@ -29,25 +29,17 @@ const InputPasswordProps = {
 const InputFirstNameProps = {
     type: 'text',
     placeholder: 'Nombres',
-    name: 'firstname',
-    id: 'firstname',
+    name: 'first_name',
+    id: 'first_name',
     label: 'Nombre'
 }
 
 const InputLastNameProps = {
     type: 'text',
     placeholder: 'Apellidos',
-    name: 'lastname',
-    id: 'lastname',
+    name: 'last_name',
+    id: 'last_name',
     label: 'Apellidos'
-}
-
-const InputTelfProps = {
-    type: 'number',
-    placeholder: 'telf',
-    name: 'telf',
-    id: 'telf',
-    label: 'Telfono:'
 }
 
 const InputSubmitProps = {
@@ -57,11 +49,10 @@ const InputSubmitProps = {
 
 function Register() {
     const [register, setRegister] = useState({
-        firstname: '',
-        lastname: '',
+        first_name: '',
+        last_name: '',
         email: '',
         password: '',
-        telf: '',
         hasErrors: false
     })
 
@@ -82,13 +73,13 @@ function Register() {
         setRegister(prev => ({ ...prev, hasErrors: false }))
 
         const newUser = {
-            name: `${register.firstname} ${register.lastname}`,
+            first_name: register.first_name,
+            last_name: register.last_name,
             email: register.email,
-            telf: register.telf,
             password: register.password
         };
 
-        const request = await fetch('http://localhost:3000/auth/register', {
+        const request = await fetch('http://localhost:8000/auth/register', {
             headers: {
                 'Content-type': 'application/json',
             },
@@ -99,12 +90,14 @@ function Register() {
         })
 
         const response = await request.json()
-
+        console.log(response)
         if (!response.ok) {
+            console.log('entrando if')
             return
         }
-
-        localStorage.setItem('token', response.user.token);
+        console.log('entrando1')
+        localStorage.setItem('userinfo', response.newUser);
+        localStorage.setItem('token', response.token);
         navigate('/dashboard')
     }
 
@@ -113,11 +106,11 @@ function Register() {
         <div className={styles.register}>
             <Form title='Regístrate en la plataforma' onSubmit={handleSubmit}>
                 <div className="field">
-                    <Input {...InputFirstNameProps} onChange={handleRegister} value={register.firstname} />
+                    <Input {...InputFirstNameProps} onChange={handleRegister} value={register.first_name} />
                 </div>
 
                 <div className="field">
-                    <Input {...InputLastNameProps} onChange={handleRegister} value={register.lastname} />
+                    <Input {...InputLastNameProps} onChange={handleRegister} value={register.last_name} />
                 </div>
 
                 <div className='field'>
@@ -127,18 +120,8 @@ function Register() {
                 <div className="field">
                     <Input {...InputPasswordProps} onChange={handleRegister} value={register.password} />
                 </div>
-                <div className="field">
-                    <Input {...InputTelfProps} onChange={handleRegister} value={register.telf} />
-                </div>
 
-                <div className='field'>
-                    <Select
-                        id={'role'}
-                        value={register.role}
-                        options={options}
-                        handler={handleRegister}
-                    />
-                </div>
+               
 
                 <Input {...InputSubmitProps} style={{ backgroundColor: '#2E76FE', color: '#ffffff', cursor: 'pointer', fontWeight: 'bold' }} />
 

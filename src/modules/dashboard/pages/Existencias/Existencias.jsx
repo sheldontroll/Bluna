@@ -20,7 +20,7 @@ const ImageEditarProps = {
     alt: 'editar',
     src: editar
 }
-const response = fetchData("http://localhost:3000/products");
+//const response = fetchData("http://localhost:3000/products");
 function Existencias() {
     const [isOverlayOpen, setIsOverlayOpen] = useState(false);
     const [existencia, setExistencia] = useState(null);
@@ -63,7 +63,7 @@ function Existencias() {
         },
         {
             name: 'Anaquel',
-            selector: row => row.id_inventario
+            selector: row => row.id_almacen
         },
         {
             name: 'Descripción',
@@ -74,12 +74,12 @@ function Existencias() {
             selector: row => row.cantidad
         },
         {
-            name: 'Actions',
+            name: 'Acciones',
             cell: (row, index, column, id) => {
                 return (
                     <div style={{ display: 'flex', gap: '1rem' }}>
-                        <button onClick={_ => handleEditExistencia(row.id_inventario)}>Edit</button>
-                        <button onClick={_ => setExistencia(row.id_inventario)}>Delete</button>
+                        <button onClick={_ => handleEditExistencia(row.id_inventario)}>Editar</button>
+                        {/* <button onClick={_ => setExistencia(row.id_inventario)}>Delete</button> */}
                     </div>
                 )
             }
@@ -99,7 +99,7 @@ function Existencias() {
 
             <div className={`${styles.area}`}>
                 <Suspense fallback={<div>Cargando...</div>}>
-                    <DataTable columns={columns} data={readed} pagination paginationComponentOptions={{ rowsPerPageText: 'Filas por pagina', rangeSeparatorText: 'de' }} />
+                    {/* <DataTable columns={columns} data={readed} pagination paginationComponentOptions={{ rowsPerPageText: 'Filas por pagina', rangeSeparatorText: 'de' }} /> */}
                 </Suspense>
             </div>
             <div>
